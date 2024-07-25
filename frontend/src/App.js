@@ -9,17 +9,18 @@ import Food from './Components/Food'
 import ProductSlider from './Components/ProductSlider'
 import Products from './Components/Products'
 import Footer from './Components/Footer'
-import SignInOptions from "./Components/sign";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainMenu from "./Components/mainmenu";
 import Dashboard from "./Components/Dashboard"
 import Reviews from "./Components/reviews"
 import SouthIndian from "./Components/sindian"
 import NorthIndian from "./Components/nindian"
+import Snacks from './Components/snacks'
 import { CartProvider } from "./Components/cartcontext";
 import Cart from "./Components/Cart"
 import Order from "./Components/order"
 import { OrderProvider } from "./Components/ordercontext"; 
+import JuicesAndMilkshakes from './Components/juices'
 
 function App() {
   return (
@@ -33,12 +34,11 @@ function App() {
               element={
                 <>
                   <Banner />
-                  <Delivery />
-                  <Food />
                   <ProductSlider />
+                  <Food />
                   <Products />
+                  <Delivery />
                   <Footer />
-                  <SignInOptions />
                 </>
               }
             />
@@ -47,6 +47,8 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/sindian" element={<SouthIndian />} />
             <Route path="/nindian" element={<NorthIndian />} />
+            <Route path="/snacks" element={<Snacks />} />
+            <Route path="/juices" element={<JuicesAndMilkshakes />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/order" element={<Order />} />
           </Routes>
