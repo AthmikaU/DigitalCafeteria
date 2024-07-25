@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from '../assets/Images/frontimg.png'
 import Foood from '../assets/Images/food-tray.png'
+import { Link } from "react-router-dom"; 
 
 const Banner = () => {
   return (
@@ -18,7 +19,7 @@ const Banner = () => {
         </div>
         <div className="col-lg-6 py-5 hero-text">
           <h1 className="display-1 fw-bold lh-1 mb-3">
-           <span>Sahyadri Digital-Cafetaria</span>
+           <span>Sahyadri Digital-Cafeteria</span>
           </h1>
           <div className="d-flex align-items-center my-5">
             <img src={Foood} alt="" className="me-3" height={25}/>
@@ -26,10 +27,9 @@ const Banner = () => {
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-start">
             <button type="button" className="btn btn-warning btn-lg px-4 me-md-2 rounded-0">
-              Snacks
-            </button>
-            <button type="button" className="btn btn-light btn-lg px-4 rounded-0">
-              Lunch-Time
+            <Link className="nav-link px-2 menu-color" to="/mainmenu">
+              Order Now
+            </Link>
             </button>
           </div>
         </div>

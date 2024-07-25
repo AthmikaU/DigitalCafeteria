@@ -1,41 +1,61 @@
+// src/Components/JuicesAndMilkshakes.jsx
 import React, { useContext } from "react";
 import { CartContext } from "./cartcontext";
 import { OrderContext } from "./ordercontext";
-import './menu.css';
+import './menu.css';  // Import the custom CSS file
 
-const foodItems = [
+const juiceAndMilkshakeItems = [
   {
-    id: 'n1',
-    name: "Butter-Naan",
-    description: "~with Mix Veg Curry",
-    price: 90,
+    id: 'j1',
+    name: "Orange Juice",
+    description: "~Freshly Squeezed",
+    price: 50,
   },
   {
-    id: 'n2',
-    name: "North-Indian Mini Meal",
-    description: "~with Gulab Jamun",
+    id: 'j2',
+    name: "Mango Juice",
+    description: "~With Pulp",
+    price: 60,
+  },
+  {
+    id: 'j3',
+    name: "Apple Juice",
+    description: "~No Added Sugar",
+    price: 55,
+  },
+  {
+    id: 'm1',
+    name: "Chocolate Milkshake",
+    description: "~Rich and Creamy",
+    price: 70,
+  },
+  {
+    id: 'm2',
+    name: "Strawberry Milkshake",
+    description: "~With Fresh Strawberries",
     price: 65,
   },
   {
-    id: 'n3',
-    name: "Chole Bhature",
-    description: "~with Kurma",
-    price: 50,
+    id: 'm3',
+    name: "Vanilla Milkshake",
+    description: "~Classic Flavor",
+    price: 60,
   },
 ];
 
-const NorthIndian = () => {
+const JuicesAndMilkshakes = () => {
   const { addToCart } = useContext(CartContext);
   const { addOrder } = useContext(OrderContext);
 
-  const handleOrder = (dish) => {
-    addOrder(dish);
+  const handleOrder = (item) => {
+    addOrder(item);
   };
+
   return (
     <div className="container mt-5">
-      <h2>North Indian Cuisine</h2>
+      <h2>Juices and Milkshakes</h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {foodItems.map((item) => (
+        {juiceAndMilkshakeItems.map((item) => (
           <div key={item.id} className="col">
             <div className="card shadow-sm">
               <div className="card-body">
@@ -63,4 +83,4 @@ const NorthIndian = () => {
   );
 };
 
-export default NorthIndian;
+export default JuicesAndMilkshakes;

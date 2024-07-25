@@ -4,19 +4,19 @@ import { OrderContext } from "./ordercontext";
 
 const foodItems = [
   {
-    id: 1,
+    id: 's1',
     name: "BisiBeleBath",
     description: "~with Boondi and Raita",
     price:50,
   },
   {
-    id: 2,
+    id: 's2',
     name: "Idli-Vade",
     description: "~with Chutney Sambar",
     price:45,
   },
   {
-    id: 3,
+    id: 's3',
     name: "Mysore Masala Dose",
     description: "~with Chutney and Sambar",
     price:50,

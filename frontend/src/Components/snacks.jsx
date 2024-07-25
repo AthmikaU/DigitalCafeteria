@@ -1,41 +1,43 @@
+// src/Components/Snacks.jsx
 import React, { useContext } from "react";
 import { CartContext } from "./cartcontext";
 import { OrderContext } from "./ordercontext";
-import './menu.css';
+import './menu.css';  
 
-const foodItems = [
+const snackItems = [
   {
-    id: 'n1',
-    name: "Butter-Naan",
-    description: "~with Mix Veg Curry",
-    price: 90,
+    id: 'sn1',
+    name: "Samosa",
+    description: "~with Chutney",
+    price: 20,
   },
   {
-    id: 'n2',
-    name: "North-Indian Mini Meal",
-    description: "~with Gulab Jamun",
-    price: 65,
+    id: 'sn2',
+    name: "Pav Bhaji",
+    description: "~with Buttered Pav",
+    price: 40,
   },
   {
-    id: 'n3',
-    name: "Chole Bhature",
-    description: "~with Kurma",
-    price: 50,
+    id: 'sn3',
+    name: "Bhel Puri",
+    description: "~with Sev",
+    price: 30,
   },
 ];
 
-const NorthIndian = () => {
+const Snacks = () => {
   const { addToCart } = useContext(CartContext);
   const { addOrder } = useContext(OrderContext);
 
   const handleOrder = (dish) => {
     addOrder(dish);
   };
+
   return (
     <div className="container mt-5">
-      <h2>North Indian Cuisine</h2>
+      <h2>Snacks</h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {foodItems.map((item) => (
+        {snackItems.map((item) => (
           <div key={item.id} className="col">
             <div className="card shadow-sm">
               <div className="card-body">
@@ -63,4 +65,4 @@ const NorthIndian = () => {
   );
 };
 
-export default NorthIndian;
+export default Snacks;

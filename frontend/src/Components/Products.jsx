@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Product1 from "../assets/Images/paneertikka.jpg";
 import Product2 from "../assets/Images/mushbiriyani.jpg";
 import Product3 from "../assets/Images/ramen.jpg";
@@ -6,16 +6,28 @@ import Product4 from "../assets/Images/butternaan.jpg";
 import Product5 from "../assets/Images/spaghetti.jpg";
 import Product from "./Product";
 import { Link } from "react-router-dom"; 
+import { CartContext } from "./cartcontext"; 
 
 const Products = () => {
+  const { addToCart } = useContext(CartContext);
+
+  const handleAddToCart = (name, price) => {
+    addToCart({
+      id: name, 
+      name: name, 
+      price: parseFloat(price), 
+      quantity: 1
+    });
+  };
+
   return (
-    <div className="container py-5" >
+    <div className="container py-5">
       <div className="d-flex justify-content-between">
-        <h3 className="text-success" id="specials">Todays Specials</h3>
+        <h3 className="text-success" id="specials">Today's Specials</h3>
         <button className="btn btn-transparent fw-bold px-3 rounded-0 border border-success">
-            <Link className="nav-link px-2 menu-color" to="/mainmenu">
-              Menu
-            </Link>
+          <Link className="nav-link px-2 menu-color" to="/mainmenu">
+            Menu
+          </Link>
         </button>
       </div>
       <div className="row mt-5">
@@ -46,7 +58,10 @@ const Products = () => {
               <div className="d-flex flex-column justify-content-center">
                 <h3>Butter-Naan and Paneer Butter Masala</h3>
                 <p>₹150</p>
-                <button className="btn bg-white rounded -0">
+                <button
+                  className="btn bg-white rounded-0"
+                  onClick={() => handleAddToCart("Butter-Naan and Paneer Butter Masala", "150")}
+                >
                   Add to Cart
                 </button>
               </div>
@@ -62,7 +77,10 @@ const Products = () => {
               <div className="d-flex flex-column justify-content-center">
                 <h3>Spaghetti Carbonara</h3>
                 <p>₹140</p>
-                <button className="btn bg-white w-100 rounded-0">
+                <button
+                  className="btn bg-white w-100 rounded-0"
+                  onClick={() => handleAddToCart("Spaghetti Carbonara", "140")}
+                >
                   Add to Cart
                 </button>
               </div>

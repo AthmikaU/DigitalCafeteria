@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Tabs, Tab } from 'react-bootstrap';
+import { Modal, Button, Form, Tabs, Tab, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const allowedAdminCredentials = [
+    { username: 'admin1', password: 'Admin1@Cafeteria' },
+    { username: 'admin2', password: 'Admin2@Cafeteria' },
+];
 
 const LoginModal = () => {
     const [show, setShow] = useState(false);
@@ -15,8 +20,14 @@ const LoginModal = () => {
         adminEmail: '',
         adminPassword: ''
     });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setError('');
+        setSuccess('');
+    };
     const handleShow = () => setShow(true);
 
     const handleChange = (event) => {
@@ -24,40 +35,60 @@ const LoginModal = () => {
         setFormData({ ...formData, [id]: value });
     };
 
+    const validateAdminCredentials = (username, password) => {
+        return allowedAdminCredentials.some(
+            (cred) => cred.username === username && cred.password === password
+        );
+    };
+
     const handleLogin = async (event) => {
-    
+        event.preventDefault();
+        
         let endpoint = '';
         let data = {};
-    
+
         if (key === 'student') {
-            endpoint = 'http://localhost:5000/student/signup'; // Backend endpoint for student login
+            endpoint = 'http://localhost:3000/student/signup'; 
             data = {
                 name: formData.name,
                 email: formData.studentEmail,
                 password: formData.studentPassword
             };
         } else if (key === 'admin') {
-            endpoint = 'http://localhost:5000/admin/signup'; // Backend endpoint for admin login
+            const isValidAdmin = validateAdminCredentials(formData.adminUsername, formData.adminPassword);
+            if (!isValidAdmin) {
+                setError('Invalid admin credentials.');
+                return;
+            }
+            endpoint = 'http://localhost:3000/admin/signup'; 
             data = {
                 username: formData.adminUsername,
                 email: formData.adminEmail,
                 password: formData.adminPassword
             };
         }
-    
+
         try {
             const response = await axios.post(endpoint, data);
             if (response && response.data) {
                 console.log('Login successful:', response.data);
+                setSuccess('Login successful!');
+                setFormData({
+                    name: '',
+                    studentEmail: '',
+                    studentPassword: '',
+                    adminUsername: '',
+                    adminEmail: '',
+                    adminPassword: ''
+                });
                 handleClose();
             } else {
-                console.error('Login failed: No data received');
+                setError('Login failed: No data received');
             }
         } catch (error) {
-            console.error('Login failed:', error.response ? error.response.data.message : error.message);
+            setError(error.response ? error.response.data.message : 'Login failed: ' + error.message);
         }
     };
-    
 
     return (
         <>
@@ -70,6 +101,8 @@ const LoginModal = () => {
                     <Modal.Title>Login</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    {success && <Alert variant="success">{success}</Alert>}
                     <Tabs
                         id="login-tabs"
                         activeKey={key}

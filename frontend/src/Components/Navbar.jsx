@@ -38,7 +38,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <AnchorLink href="#specials" className="nav-link px-2 menu-color">
+            <AnchorLink href="#specials" className="nav-link px-2 menu-color" >
               Today's Special
             </AnchorLink>
           </li>

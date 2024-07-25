@@ -5,7 +5,7 @@ const categories = [
   { name: "North Indian", path: "/nindian" },
   { name: "South Indian", path: "/sindian" },
   { name: "Snacks", path: "/snacks" },
-  { name: "Beverages", path: "/beverages" },
+  { name: "Juices & Milkshakes", path: "/juices" },
 ];
 
 const MainMenu = () => {

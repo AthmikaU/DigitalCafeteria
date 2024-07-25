@@ -1,0 +1,53 @@
+/* custom.css */
+.card {
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-title {
+    color: rgb(231, 7, 7);
+  }
+  
+  .card-text {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  .container {
+    margin-top: 50px;
+  }
+  
+  h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    color: #343a40;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+  
