@@ -46,7 +46,7 @@ const Footer = () => {
                   <li className="nav-item mb-2">
                     <a href="#" className="nav-link p-0 text-white">
                       <i className="bi bi-envelope-at me-2"></i>
-                      <span><a href="mailto:athmikaubhat@gmail.com">athmikaubhat@gmail.com</a></span>
+                      <span><a href="mailto:athmikaubhat@gmail.com">digitalcafeteria@gmail.com</a></span>
                     </a>
                   </li>
                 </ul>
