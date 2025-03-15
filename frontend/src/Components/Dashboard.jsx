@@ -10,7 +10,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/order');
+        const response = await axios.get('https://digitalcafeteria.onrender.com/order');
+        // const response = await axios.get('http://localhost:3000/order');
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
