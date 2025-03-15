@@ -11,7 +11,8 @@ const Reviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/reviews');
+        // const response = await axios.get('http://localhost:3000/reviews');
+        const response = await axios.get('https://digitalcafeteria.onrender.com/reviews');
         setReviews(response.data);
       } catch (error) {
         console.error('Error fetching reviews:', error);
