@@ -11,7 +11,7 @@ const ReviewsForm = ({ show, onHide, onReviewAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/review', {
+      const response = await axios.post('https://digitalcafeteria.onrender.com/review', {
         customerName,
         reviewText,
         rating
