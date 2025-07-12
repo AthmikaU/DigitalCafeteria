@@ -24,7 +24,7 @@ const Delivery = () => {
         <div className="mb-3">
         <img src={Pick} className='w-50 h-50' alt="" />
         </div>
-        <h5>Pick</h5>
+        <h5>Collect</h5>
       </div>
     </div>
   </div>

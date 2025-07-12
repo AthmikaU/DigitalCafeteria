@@ -70,7 +70,7 @@ const Footer = () => {
                   <li className="nav-item mb-2 d-flex align-items-start">
                     <i className="bi bi-envelope-at me-2 mt-1"></i>
                     <a
-                      href="mailto:digitalcafeteria@gmail.com"
+                      href="mailto:athmikaubhat@gmail.com"
                       className="nav-link p-0 text-white"
                     >
                       digitalcafeteria@gmail.com
@@ -81,7 +81,7 @@ const Footer = () => {
             </div>
 
             <div className="d-flex justify-content-between pt-4 mt-4 border-top">
-              <p className="text-white">&copy; 2024 Digital Cafeteria, Inc. All rights reserved.</p>
+              <p className="text-white">&copy; 2025 Digital Cafeteria, Inc. All rights reserved.</p>
               <ul className="list-unstyled d-flex">
                 <li className="ms-3">
                   <a

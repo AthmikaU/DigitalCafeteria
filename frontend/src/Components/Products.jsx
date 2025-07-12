@@ -5,88 +5,77 @@ import Product3 from "../assets/Images/ramen.jpg";
 import Product4 from "../assets/Images/butternaan.jpg";
 import Product5 from "../assets/Images/spaghetti.jpg";
 import Product from "./Product";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "./cartcontext"; 
+import { OrderContext } from "./ordercontext"; 
 
 const Products = () => {
   const { addToCart } = useContext(CartContext);
+  const { placeOrderNow } = useContext(OrderContext); 
+  const navigate = useNavigate();
 
-  const handleAddToCart = (name, price) => {
-    addToCart({
-      id: name, 
-      name: name, 
-      price: parseFloat(price), 
-      quantity: 1
-    });
+  const items = [
+    { image: Product1, name: "Paneer Tikka", price: 100, color: "p1color" },
+    { image: Product2, name: "Mushroom Biriyani", price: 110, color: "p2color" },
+    { image: Product3, name: "Ramen", price: 120, color: "p3color" },
+    { image: Product4, name: "Butter-Naan & Paneer Butter Masala", price: 150, color: "p4color" },
+    { image: Product5, name: "Spaghetti Carbonara", price: 140, color: "p4color" }
+  ];
+
+  // Handler for both cart and order logic
+  const handleClick = (item, mode) => {
+    const product = {
+      id: item.name,
+      name: item.name,
+      price: item.price,
+      quantity: 1,
+    };
+
+    if (mode === 'cart') {
+      addToCart(product);
+    } else if (mode === 'order') {
+      placeOrderNow(product); 
+      addToCart(product);     // add to cart before placing order
+      navigate('/order');     // redirect to order page
+    }
   };
 
   return (
     <div className="container py-5">
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <h3 className="text-success" id="specials">Today's Specials</h3>
-        <button className="btn btn-transparent fw-bold px-3 rounded-0 border border-success">
-          <Link className="nav-link px-2 menu-color" to="/mainmenu">
-            Menu
-          </Link>
-        </button>
+        <Link
+          to="/mainmenu"
+          className="btn btn-outline-success fw-bold px-3 rounded-0"
+        >
+          Go to Full Menu
+        </Link>
       </div>
-      <div className="row mt-5">
-        <Product
-          Image={Product1}
-          Name="Paneer Tikka"
-          Price="100"
-          Color="p1color"
-        />
-        <Product
-          Image={Product2}
-          Name="Mushroom Biriyani"
-          Price="110"
-          Color="p2color"
-        />
-        <Product
-          Image={Product3}
-          Name="Ramen"
-          Price="120"
-          Color="p3color"
-        />
-        <div className="col-12 col-md-6">
-          <div className="p-1">
-            <div className="border shadow-sm d-flex p4color">
-              <div className="text-center px-0 px-lg-2">
-                <img src={Product4} alt="" className="p-Image" />
-              </div>
-              <div className="d-flex flex-column justify-content-center">
-                <h3>Butter-Naan and Paneer Butter Masala</h3>
-                <p>₹150</p>
+
+      <div className="row g-4">
+        {items.map((item, index) => (
+          <div className="col-12 col-md-6 col-lg-4" key={index}>
+            <div className={`border shadow-sm d-flex flex-column justify-content-between align-items-center text-center p-3 ${item.color}`}>
+              <img src={item.image} alt={item.name} className="p-Image mb-3" />
+              <h4>{item.name}</h4>
+              <p>₹{item.price}</p>
+              <div className="d-flex gap-2">
                 <button
-                  className="btn bg-white rounded-0"
-                  onClick={() => handleAddToCart("Butter-Naan and Paneer Butter Masala", "150")}
+                  className="btn btn-outline-success btn-sm rounded-0"
+                  onClick={() => handleClick(item, 'cart')}
                 >
                   Add to Cart
+                </button>
+                <button
+                  className="btn btn-dark btn-sm rounded-0"
+                  onClick={() => handleClick(item, 'order')}
+                >
+                  Order Now
                 </button>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-12 col-md-6">
-          <div className="p-1">
-            <div className="border shadow-sm d-flex p4color">
-              <div className="text-center px-0 px-lg-2">
-                <img src={Product5} alt="" className="p-Image" />
-              </div>
-              <div className="d-flex flex-column justify-content-center">
-                <h3>Spaghetti Carbonara</h3>
-                <p>₹140</p>
-                <button
-                  className="btn bg-white w-100 rounded-0"
-                  onClick={() => handleAddToCart("Spaghetti Carbonara", "140")}
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

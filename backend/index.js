@@ -1,28 +1,44 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const path = require('path');
+require('dotenv').config();
 
-const authRoutes = require('./routes/auth');  
+const authRoutes = require('./routes/auth');
+const menuRoutes = require('./routes/menu');
 const orderRoutes = require('./routes/order');
 const reviewRoutes = require('./routes/review');
+
 const app = express();
-
 app.use(cors());
-app.use(express.json());  
-app.use(bodyParser.json());
+app.use(express.json());
 
-mongoose.connect('mongodb+srv://athmikaubhat:Mika%402209@athmikau.jf8wzoa.mongodb.net/SDC', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true
 })
 .then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+.catch(err => console.error('MongoDB Connection Error:', err));
 
-app.use('/', authRoutes);  
-app.use('/', orderRoutes); 
+// API Routes
+app.use('/', authRoutes);
+app.use('/menu', menuRoutes);
+app.use('/', orderRoutes);
 app.use('/', reviewRoutes);
 
+// Serve frontend only in production
+if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '..', 'frontend', 'build');
+  app.use(express.static(buildPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
+
+// Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
+);

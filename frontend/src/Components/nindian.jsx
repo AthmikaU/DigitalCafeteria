@@ -1,42 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "./cartcontext";
 import { OrderContext } from "./ordercontext";
+import axios from '../axiosConfig';
 import './menu.css';
-
-const foodItems = [
-  {
-    id: 'n1',
-    name: "Butter-Naan",
-    description: "~with Mix Veg Curry",
-    price: 90,
-  },
-  {
-    id: 'n2',
-    name: "North-Indian Mini Meal",
-    description: "~with Gulab Jamun",
-    price: 65,
-  },
-  {
-    id: 'n3',
-    name: "Chole Bhature",
-    description: "~with Kurma",
-    price: 50,
-  },
-];
 
 const NorthIndian = () => {
   const { addToCart } = useContext(CartContext);
   const { addOrder } = useContext(OrderContext);
+  const [dishes, setDishes] = useState([]);
 
-  const handleOrder = (dish) => {
-    addOrder(dish);
-  };
+  useEffect(() => {
+    const fetchDishes = async () => {
+      try {
+        // const response = await axios.get('http://localhost:3000/menu?category=North Indian');
+        const response = await axios.get('/menu?category=North%20Indian'); // Uses REACT_APP_API_BASE_URL from .env
+        setDishes(response.data);
+      } catch (error) {
+        console.error("Error fetching North Indian dishes:", error);
+      }
+    };
+    fetchDishes();
+  }, []);
+
   return (
     <div className="container mt-5">
       <h2>North Indian Cuisine</h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {foodItems.map((item) => (
-          <div key={item.id} className="col">
+        {dishes.map((item) => (
+          <div key={item._id} className="col">
             <div className="card shadow-sm">
               <div className="card-body">
                 <h5 className="card-title">{item.name}</h5>
@@ -50,7 +41,7 @@ const NorthIndian = () => {
                 </button>
                 <button
                   className="btn btn-success"
-                  onClick={() => handleOrder(item)}
+                  onClick={() => addOrder(item)}
                 >
                   Order Now
                 </button>

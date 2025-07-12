@@ -1,36 +1,41 @@
+// routes/auth.js
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const { Student, Admin } = require('../models/User'); 
+const User = require('../models/User');
 
-const bodyParser = express.json();
- 
-router.post('/student/signup', bodyParser, async (req, res) => {
-    const { name, email, password } = req.body;
+// Admin Login
+router.post('/login/admin', async (req, res) => {
+  const { username, password } = req.body;
 
-    try {
-        const newStudent = new Student({ name, email, password });
-        await newStudent.save();
+  if (username === 'cafeadmin' && password === 'admin123') {
+    return res.status(200).json({ role: 'admin', username });
+  }
 
-        res.status(201).json({ message: 'Student logged in successfully' });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server error');
-    }
+  return res.status(401).json({ msg: 'Invalid admin credentials' });
 });
 
-router.post('/admin/signup', bodyParser, async (req, res) => {
-    const { username, email, password } = req.body;
+// User Login
+router.post('/login/user', async (req, res) => {
+  const { id, password } = req.body;
+  const user = await User.findOne({ id });
 
-    try {
-        const newAdmin = new Admin({ username, email, password });
-        await newAdmin.save();
+  if (!user) return res.status(404).json({ msg: 'User not found' });
+  if (password !== user.password) return res.status(401).json({ msg: 'Incorrect password' });
 
-        res.status(201).json({ message: 'Admin logged in successfully' });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server error');
-    }
+  return res.status(200).json({ role: 'user', id });
+});
+
+// Register User (admin triggers this)
+router.post('/register/user', async (req, res) => {
+  const { id, password } = req.body;
+
+  const exists = await User.findOne({ id });
+  if (exists) return res.status(409).json({ msg: 'User already exists' });
+
+  const newUser = new User({ id, password }); 
+  await newUser.save();
+
+  return res.status(201).json({ msg: 'User registered' });
 });
 
 module.exports = router;
