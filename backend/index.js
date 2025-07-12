@@ -10,7 +10,11 @@ const orderRoutes = require('./routes/order');
 const reviewRoutes = require('./routes/review');
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: "https://digital-cafetaria.vercel.app",
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB Connection
