@@ -1,3 +1,4 @@
+// Components/MainMenu.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import axios from '../axiosConfig';
 import { CartContext } from './cartcontext';
@@ -8,20 +9,42 @@ const MainMenu = () => {
   const [items, setItems] = useState([]);
   const { addToCart } = useContext(CartContext);
 
+  const categories = ['North Indian', 'South Indian', 'Snacks', 'Juices & Milkshakes'];
+
   useEffect(() => {
-    axios.get(`/menu?category=${category}`)
-      .then(res => setItems(res.data))
-      .catch(err => console.error('Failed to fetch menu:', err));
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get(`/menu?category=${category}`);
+        // Ensure each item has a unique id for React and cart logic
+        const dataWithId = res.data.map(i => ({
+          ...i,
+          id: i.name  // use name as ID
+        }));
+        setItems(dataWithId);
+      } catch (err) {
+        console.error('Failed to fetch menu:', err);
+      }
+    };
+    fetchItems();
   }, [category]);
 
-  const categories = ['North Indian', 'South Indian', 'Snacks', 'Juices & Milkshakes'];
+  const handleAddToCart = (item) => {
+    // Add item using id (either _id or name)
+    addToCart({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: 1
+    });
+    alert(`${item.name} added to cart!`);
+  };
 
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Menu</h2>
       <ul className="nav nav-tabs">
         {categories.map(cat => (
-          <li className="nav-item" key={cat}>
+          <li key={cat} className="nav-item">
             <button
               className={`nav-link ${category === cat ? 'active' : ''}`}
               onClick={() => setCategory(cat)}
@@ -35,15 +58,15 @@ const MainMenu = () => {
       <div className="row mt-4">
         {items.length > 0 ? (
           items.map(item => (
-            <div className="col-md-4 mb-4" key={item._id}>
+            <div key={item.id} className="col-md-4 mb-3">
               <div className="card h-100">
                 <div className="card-body">
-                  <h5 className="card-title">{item.name}</h5>
-                  <p className="card-text">{item.description}</p>
-                  <p className="card-text">Price: ₹{item.price}</p>
+                  <h5>{item.name}</h5>
+                  <p>{item.description || '-'}</p>
+                  <p>₹{item.price}</p>
                   <button
                     className="btn btn-success"
-                    onClick={() => addToCart(item)}
+                    onClick={() => handleAddToCart(item)}
                   >
                     Add to Cart
                   </button>

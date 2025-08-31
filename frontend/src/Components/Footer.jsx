@@ -76,6 +76,16 @@ const Footer = () => {
                       digitalcafeteria@gmail.com
                     </a>
                   </li>
+                  
+                  <li className="nav-item mb-2 d-flex align-items-start">
+                    <i className="bi bi-telephone-fill me-2 mt-1"></i>
+                    <a
+                      href="tel:+918590982207"
+                      className="nav-link p-0 text-white"
+                    >
+                      +91 85909 82207
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>

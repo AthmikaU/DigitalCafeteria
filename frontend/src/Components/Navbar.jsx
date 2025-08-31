@@ -5,20 +5,21 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
-  const userId = user?.userId || user?.id || '';
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    navigate('/');
+    localStorage.removeItem("user");
+    if (typeof setUser === "function") {
+      setUser(null);
+    }
+    navigate("/");
   };
 
   const scrollToSection = (sectionId) => {
-    navigate('/mainpage');
+    navigate("/mainpage");
     setTimeout(() => {
       const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (el) el.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
 
@@ -43,42 +44,70 @@ const Navbar = ({ user, setUser }) => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className={`collapse navbar-collapse ${!isNavCollapsed ? 'show' : ''}`} id="navbarNav">
+      <div
+        className={`collapse navbar-collapse ${!isNavCollapsed ? "show" : ""}`}
+        id="navbarNav"
+      >
         <ul className="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
-          {user?.role === 'user' && (
+          {user?.role === "user" && (
             <>
-              <li className="nav-item"><Link to="/mainpage" className="nav-link menu-color">Home</Link></li>
-              <li className="nav-item"><Link to="/mainmenu" className="nav-link menu-color">Menu</Link></li>
-              <li className="nav-item"><Link to="/cart" className="nav-link menu-color">Cart</Link></li>
-              <li className="nav-item"><Link to="/order" className="nav-link menu-color">Orders</Link></li>
+              <li className="nav-item">
+                <Link to="/mainpage" className="nav-link menu-color">Home</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/mainmenu" className="nav-link menu-color">Menu</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/cart" className="nav-link menu-color">Cart</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/order" className="nav-link menu-color">Orders</Link>
+              </li>
               <li className="nav-item">
                 <Link to="/order-history" className="nav-link menu-color">History</Link>
               </li>
-              <li className="nav-item"><Link to="/reviews" className="nav-link menu-color">Reviews</Link></li>
               <li className="nav-item">
-                <button className="nav-link menu-color btn btn-link px-2" onClick={() => scrollToSection('specials')}>
+                <Link to="/reviews" className="nav-link menu-color">Reviews</Link>
+              </li>
+              <li className="nav-item">
+                <button
+                  className="nav-link menu-color btn btn-link px-2"
+                  onClick={() => scrollToSection("specials")}
+                >
                   Today's Special
                 </button>
               </li>
               <li className="nav-item">
-                <button className="nav-link menu-color btn btn-link px-2" onClick={() => scrollToSection('footer')}>
+                <button
+                  className="nav-link menu-color btn btn-link px-2"
+                  onClick={() => scrollToSection("footer")}
+                >
                   Contact
                 </button>
               </li>
             </>
           )}
 
-          {user?.role === 'admin' && (
+          {user?.role === "admin" && (
             <>
-              <li className="nav-item"><Link to="/admin-dashboard" className="nav-link menu-color">Dashboard</Link></li>
-              <li className="nav-item"><Link to="/admin-orders" className="nav-link menu-color">Recent Orders</Link></li>
-              <li className="nav-item"><Link to="/admin/menu-editor" className="nav-link menu-color">Menu Editor</Link></li>
+              <li className="nav-item">
+                <Link to="/admin-dashboard" className="nav-link menu-color">Dashboard</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/admin-orders" className="nav-link menu-color">Recent Orders</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/admin/menu-editor" className="nav-link menu-color">Menu Editor</Link>
+              </li>
             </>
           )}
         </ul>
 
         {user && (
-          <button className="btn btn-outline-dark ms-lg-3 mt-2 mt-lg-0" onClick={handleLogout}>
+          <button
+            className="btn btn-outline-dark ms-lg-3 mt-2 mt-lg-0"
+            onClick={handleLogout}
+          >
             Logout
           </button>
         )}

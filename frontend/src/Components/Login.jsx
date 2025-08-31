@@ -10,11 +10,12 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e?.preventDefault(); // Prevent form refresh
+    if (!id || !password) return alert("Please enter all fields");
+
     const url = role === 'admin' ? '/login/admin' : '/login/user';
-    const payload = role === 'admin'
-      ? { username: id, password }
-      : { id, password };
+    const payload = role === 'admin' ? { username: id, password } : { id, password };
 
     try {
       const res = await axios.post(url, payload);
@@ -33,16 +34,18 @@ function Login({ onLogin }) {
       </div>
 
       <div className="login-card p-4 shadow bg-white rounded" style={{ minWidth: '300px' }}>
-        <div className="d-flex justify-content-center mb-3">
+        <div className="d-flex justify-content-center mb-3 role-toggle">
           <button
+            type="button"
             onClick={() => setRole('admin')}
-            className={`btn ${role === 'admin' ? 'btn-dark' : 'btn-outline-dark'} mx-1`}
+            className={role === 'admin' ? 'active' : ''}
           >
             Admin
           </button>
           <button
+            type="button"
             onClick={() => setRole('user')}
-            className={`btn ${role === 'user' ? 'btn-dark' : 'btn-outline-dark'} mx-1`}
+            className={role === 'user' ? 'active' : ''}
           >
             Student/Faculty
           </button>
@@ -50,23 +53,25 @@ function Login({ onLogin }) {
 
         <h5 className="text-center mb-3">{role === 'admin' ? 'Admin Login' : 'Student Login'}</h5>
 
-        <input
-          type="text"
-          className="form-control mb-2"
-          placeholder="Username / ID"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-        />
-        <input
-          type="password"
-          className="form-control mb-3"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="btn btn-success w-100" onClick={handleLogin}>
-          Login
-        </button>
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            className="form-control mb-2"
+            placeholder="Username / ID"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
+          <input
+            type="password"
+            className="form-control mb-3"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" className="btn btn-success w-100">
+            Login
+          </button>
+        </form>
       </div>
     </div>
   );

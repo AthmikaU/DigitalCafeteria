@@ -13,6 +13,7 @@ const JuicesAndMilkshakes = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        // const response = await axios.get('http://localhost:5000/menu?category=Juices%20%26%20Milkshakes');
         const response = await axios.get('/menu?category=Juices%20%26%20Milkshakes'); // Uses baseURL from REACT_APP_API_BASE_URL
         setItems(response.data);
       } catch (error) {

@@ -12,7 +12,7 @@ const NorthIndian = () => {
   useEffect(() => {
     const fetchDishes = async () => {
       try {
-        // const response = await axios.get('http://localhost:3000/menu?category=North Indian');
+        // const response = await axios.get('http://localhost:5000/menu?category=North Indian');
         const response = await axios.get('/menu?category=North%20Indian'); // Uses REACT_APP_API_BASE_URL from .env
         setDishes(response.data);
       } catch (error) {

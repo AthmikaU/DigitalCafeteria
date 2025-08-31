@@ -12,7 +12,7 @@ const Snacks = () => {
   useEffect(() => {
     const fetchSnacks = async () => {
       try {
-        // axios.get('http://localhost:3000/menu?category=Snacks')
+        // const response = await axios.get('http://localhost:5000/menu?category=Snacks')
         const response = await axios.get('/menu?category=Snacks'); // Uses REACT_APP_API_BASE_URL
         setSnacks(response.data);
       } catch (error) {
@@ -33,12 +33,27 @@ const Snacks = () => {
                 <h5 className="card-title">{item.name}</h5>
                 <p className="card-text">{item.description}</p>
                 <p className="card-text">Rs. {item.price.toFixed(2)}</p>
-                <button className="btn btn-primary me-2" onClick={() => addToCart(item)}>
+                {/* <button className="btn btn-primary me-2" onClick={() => addToCart(item)}>
                   Add to Cart
                 </button>
                 <button className="btn btn-success" onClick={() => addOrder(item)}>
                   Order Now
+                </button> */}
+
+                <button className="btn btn-primary me-2" onClick={() => addToCart(item)}>
+                  Add to Cart
                 </button>
+
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    addToCart(item); // optionally add to cart first
+                    addOrder(item);
+                  }}
+                >
+                  Order Now
+                </button>
+
               </div>
             </div>
           </div>

@@ -40,8 +40,15 @@ const RecentOrders = () => {
             <div className="col" key={order._id}>
               <div className="card shadow-sm">
                 <div className="card-body">
-                  <h5 className="card-title">{order.item}</h5>
-                  <p className="card-text">Qty: {order.quantity}</p>
+                  {/* Item with ID */}
+                  <h5 className="card-title d-flex justify-content-between align-items-center">
+                    <span>
+                      {order.item} – <span className="text-muted">{order.userId}</span>
+                    </span>
+                    {/* Highlighted Quantity */}
+                    <span className="badge bg-primary fs-6">x{order.quantity}</span>
+                  </h5>
+
                   <p className="card-text">Paid: Rs. {order.totalPaid}</p>
                   <p className="card-text">Mode: {order.paymentMode}</p>
                   <p className="card-text text-muted">

@@ -13,6 +13,7 @@ const app = express();
 // app.use(cors());
 app.use(cors({
   origin: "https://digital-cafetaria.vercel.app",
+  // origin: "http://localhost:3000",
   credentials: true
 }));
 app.use(express.json());
@@ -42,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
 );
